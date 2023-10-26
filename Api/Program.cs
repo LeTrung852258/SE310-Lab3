@@ -1,6 +1,5 @@
 using Core.Models;
 using Core.Repositories;
-using Microsoft.EntityFrameworkCore;
 
 namespace Api
 {

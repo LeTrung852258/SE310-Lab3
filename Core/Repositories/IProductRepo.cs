@@ -8,9 +8,9 @@ namespace Core.Repositories
 
         Task<Product?> GetProductAsync(int id);
 
-        Task<Product> CreateProductAsync(Product product);
+        Task CreateProductAsync(Product product);
 
-        Task<Product> UpdateProductAsync(Product product);
+        Task UpdateProductAsync(Product product);
 
         Task DeleteProductAsync(int id);
     }

@@ -6,11 +6,11 @@ namespace Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoryController : ControllerBase
+    public class CategoriesController : ControllerBase
     {
         private readonly ICategoryRepo _categoryRepo;
 
-        public CategoryController(ICategoryRepo categoryRepo)
+        public CategoriesController(ICategoryRepo categoryRepo)
         {
             _categoryRepo = categoryRepo;
         }

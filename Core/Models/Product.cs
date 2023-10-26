@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Core.Models
 {
@@ -13,7 +14,7 @@ namespace Core.Models
         [Required]
         public int CategoryId { get; set; }
 
-        public Category Category { get; set; } = null!;
+        public Category? Category { get; set; }
 
         [Required]
         public int UnitsInStock { get; set; }

@@ -12,11 +12,10 @@ namespace Core.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<Product> CreateProductAsync(Product product)
+        public async Task CreateProductAsync(Product product)
         {
             _dbContext.Add(product);
             await _dbContext.SaveChangesAsync();
-            return product;
         }
 
         public async Task DeleteProductAsync(int id)
@@ -32,19 +31,20 @@ namespace Core.Repositories
 
         public async Task<Product?> GetProductAsync(int id)
         {
-            return await _dbContext.Products.FirstOrDefaultAsync(i => i.Id == id);
+            return await _dbContext.Products.Include(i => i.Category)
+                                            .FirstOrDefaultAsync(i => i.Id == id);
         }
 
         public async Task<IList<Product>> GetProductsAsync()
         {
-            return await _dbContext.Products.ToListAsync();
+            return await _dbContext.Products.Include(i => i.Category)
+                                            .ToListAsync();
         }
 
-        public async Task<Product> UpdateProductAsync(Product product)
+        public async Task UpdateProductAsync(Product product)
         {
             _dbContext.Update(product);
             await _dbContext.SaveChangesAsync();
-            return product;
         }
     }
 }

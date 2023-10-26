@@ -6,11 +6,11 @@ namespace Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class ProductsController : ControllerBase
     {
         private readonly IProductRepo _productRepo;
 
-        public ProductController(IProductRepo productRepo)
+        public ProductsController(IProductRepo productRepo)
         {
             _productRepo = productRepo;
         }
@@ -56,8 +56,15 @@ namespace Api.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteProduct(int id)
         {
-            await _productRepo.DeleteProductAsync(id);
-            return Ok();
+            try
+            {
+                await _productRepo.DeleteProductAsync(id);
+                return Ok();
+            }
+            catch (ApplicationException)
+            {
+                return NotFound();
+            }
         }
     }
 }

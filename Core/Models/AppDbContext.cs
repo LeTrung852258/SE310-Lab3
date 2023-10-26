@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace Core.Models
 {
@@ -7,9 +8,16 @@ namespace Core.Models
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
 
-        public AppDbContext(DbContextOptions builder)
-            : base(builder)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json",
+                             optional: true,
+                             reloadOnChange: true);
+            IConfigurationRoot configuration = builder.Build();
+            var connString = configuration.GetConnectionString("AppDb");
+            optionsBuilder.UseSqlite(connString);
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
