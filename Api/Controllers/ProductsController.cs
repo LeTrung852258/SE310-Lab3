@@ -49,8 +49,16 @@ namespace Api.Controllers
             {
                 return BadRequest();
             }
-            await _productRepo.UpdateProductAsync(product);
-            return Ok(product);
+
+            try
+            {
+                await _productRepo.UpdateProductAsync(product);
+                return Ok(product);
+            }
+            catch (ApplicationException)
+            {
+                return NotFound();
+            }
         }
 
         [HttpDelete("{id}")]

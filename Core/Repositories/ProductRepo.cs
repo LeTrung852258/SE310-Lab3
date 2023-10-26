@@ -43,8 +43,15 @@ namespace Core.Repositories
 
         public async Task UpdateProductAsync(Product product)
         {
-            _dbContext.Update(product);
-            await _dbContext.SaveChangesAsync();
+            try
+            {
+                _dbContext.Update(product);
+                await _dbContext.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw new ApplicationException();
+            }
         }
     }
 }
