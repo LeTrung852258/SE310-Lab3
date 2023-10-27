@@ -4,7 +4,47 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container-fluid>
+    <h2>Product List</h2>
+    <table class="table table-sm table-striped table-bordered m-2">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Quality</th>
+                <th>Unit Price</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+    </table>
 </div>
+<script type="text/javascript" src="lib/jquery/dist/jquery.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        ShowAllProducts();
+
+        function ShowAllProducts() {
+            $("table tbody").html("");
+            $.ajax({
+                url: "https://localhost:7131/api/Products",
+                type: "get",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result, status, xhr) {
+                    $.each(result, function (index, value) {
+                        $("tbody").append($("<tr>"));
+                        appendElement = $("tbody tr").last();
+                        appendElement.append($("<td>").html(value["id"]));
+                        appendElement.append($("<td>").html(value["name"]));
+                        appendElement.append($("<td>").html(value["unitsInStock"]));
+                        appendElement.append($("<td>").html(value["unitPrice"]));
+                    });
+                },
+                error: function(xhr, status, error) {
+                console.log(xhr);
+            }
+            });
+        }
+    });
+</script>
